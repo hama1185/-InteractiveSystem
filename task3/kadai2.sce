@@ -28,6 +28,7 @@ for freq = -1 : 0.02 : 1
             max = x;
         end
     end
+    end
     
     record = [record,max^2];
 
