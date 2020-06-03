@@ -22,7 +22,7 @@ for freq = -1 : 0.02 : 1
         a = (Force(time,freq) -k * x - c * v) / m;
         v = v + a * dt;
         x = x + v * dt;
-        if freq == 0 && max < abs(x) then
+        if freq == 0 && max < abs(x) && time >= 200 then
             max = x;
         else if time >= 1000 && max < abs(x)  then
             max = x;
@@ -33,12 +33,6 @@ for freq = -1 : 0.02 : 1
     record = [record,max^2];
 
 end
-
-//これにより運動の軌跡をプロット
-// plot(t,record_0,t,record_1,t,record_2,t,record_3,t,record_4,t,record_5);
-// legend("plot");
-// xtitle("Simulation","t","x");
-// xgrid();
 
 plot([-1 : 0.02 : 1],record);
 legend("plot");
