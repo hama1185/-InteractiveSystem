@@ -1,7 +1,6 @@
 m = 1.0;//質量
 k = 1.0;//ばね定数
-c = 1.0;//ダンパ係数//
-maxfreq = [1];//振幅の二乗を格納する 1は一定の力の時 
+c = 1.0;//ダンパ係数
 function F = Force(t,a)
     if a == 0 then
         F = 1;
@@ -23,15 +22,14 @@ for freq = -1 : 0.02 : 1
         a = (Force(time,freq) -k * x - c * v) / m;
         v = v + a * dt;
         x = x + v * dt;
-        if time >= 1000 && max < abs(x)  then
+        if freq == 0 && max < abs(x) then
+            max = x;
+        else if time >= 1000 && max < abs(x)  then
             max = x;
         end
     end
-
-    if freq == 0 then
-        record = [record,1];
-    else record = [record,max^2];
-    end
+    
+    record = [record,max^2];
 
 end
 
@@ -45,8 +43,3 @@ plot([-1 : 0.02 : 1],record);
 legend("plot");
 xtitle("Advanced","freq","power");
 xgrid();
-//cだけ値を変更すると仮定して
-//c == 0 単振動
-//0 < c < 2減衰振動
-//c == 2 臨界減衰
-//c > 2 過減衰 
