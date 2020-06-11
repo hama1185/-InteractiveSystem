@@ -1,11 +1,25 @@
 wav=loadwave("./plane.wav");
 
 out=zeros(wav);
+l = 8;//割る数
+avewav=zeros(1:l);
 
-//5つ平均化
-for n = 15:length(wav),
-    for i = 0:14,
-        out(n)=out(n)+wav(n-i)/15;
+for n = 1:length(wav),
+    if n<l then
+        avewav(n)=wav(n);
+    else
+        avewav(l)=wav(n);
+        for i = 1:l,
+            out(n)=out(n)+avewav(i)/l;
+        end
+
+        for i = 1:l-1,
+            if i<l-1 then
+                avewav(i)=avewav(i+1);
+            else
+                avewav(i)=out(n);
+            end
+        end
     end
 end
 //playsnd(out);

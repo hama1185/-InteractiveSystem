@@ -1,22 +1,26 @@
 wave = [-49:50];//100
-waveshic = [-49:0.1:50];//1000
 wave = [wave, wave, wave, wave, wave];
-waveshic = [waveshic, waveshic, waveshic, waveshic, waveshic];
 out = zeros(wave);
+l = 8;//割る数
+avewave=zeros(1:l);
 
-k = 140;
+for n = 1:length(wave),
+    if n<l then
+        avewave(n)=wave(n);
+    else
+        avewave(l)=wave(n);
+        for i = 1:l,
+            out(n)=out(n)+avewave(i)/l;
+        end
 
-//別フィルタ
-// k = 0.01;
-// last = 0;
-// for n = 1:length(wave),
-//     out(n) = (1 - k) * last + k * wave(n);
-//     last = out(n);
-// end
-for n = k:length(wave)-k,
-	for i=-k:k-1,
-		out(n) = out(n) + waveshic(10*n-i) / (2*k);
-	end
+        for i = 1:l-1,
+            if i<l-1 then
+                avewave(i)=avewave(i+1);
+            else
+                avewave(i)=out(n);
+            end
+        end
+    end
 end
 plot(out);
 //legend("square","filter1","filter2");
