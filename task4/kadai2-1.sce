@@ -23,4 +23,3 @@ for n = 1:length(wave),
     end
 end
 plot(out);
-//legend("square","filter1","filter2");
